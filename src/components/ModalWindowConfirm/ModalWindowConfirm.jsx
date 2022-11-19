@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import modalWindowStyle from './ModalWindowConfirm.module.scss';
 
@@ -18,5 +19,17 @@ const ModalWindowConfirm = ({ text, onClickNo, onClickYes }) => {
       </div>
     </div>
   );
+};
+
+ModalWindowConfirm.defaultProps = {
+  text: 'none',
+  onClickNo: () => {},
+  onClickYes: () => {},
+};
+
+ModalWindowConfirm.propTypes = {
+  text: PropTypes.string,
+  onClickNo: PropTypes.func,
+  onClickYes: PropTypes.func,
 };
 export default ModalWindowConfirm;

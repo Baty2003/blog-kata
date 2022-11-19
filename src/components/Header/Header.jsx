@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { deleteCookie } from '../../helpFunctions';
+import { logoutUser } from '../../redux/actions';
 import { LinkStyle } from '../LinkStyle';
 import { ProfileInCard } from '../ProfileInCard';
 
@@ -55,4 +57,17 @@ const Header = ({ user, logout }) => {
     </header>
   );
 };
-export default Header;
+
+const mapsStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapsStateToDispatch = (dispatch) => {
+  return {
+    logout: () => dispatch(logoutUser()),
+  };
+};
+
+export default connect(mapsStateToProps, mapsStateToDispatch)(Header);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import linkHeaderStyle from './ProfileInCard.module.scss';
 
@@ -20,5 +21,19 @@ const ProfileInCard = ({ username, date, img, notDate }) => {
       </div>
     </div>
   );
+};
+
+ProfileInCard.defaultProps = {
+  username: 'NONE',
+  date: 'NONE',
+  img: '',
+  notDate: false,
+};
+
+ProfileInCard.propTypes = {
+  username: PropTypes.string,
+  date: PropTypes.string,
+  img: PropTypes.string,
+  notDate: PropTypes.bool,
 };
 export default ProfileInCard;

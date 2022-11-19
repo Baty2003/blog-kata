@@ -1,13 +1,13 @@
-export const loginUserRequest = async (email, password) => {
-  console.log(email + '|||' + password);
+const baseUrl = 'https://blog.kata.academy/api';
 
+export const loginUserRequest = async (email, password) => {
   const body = {
     user: {
       email: email,
       password: password,
     },
   };
-  const response = await fetch('https://blog.kata.academy/api/users/login', {
+  const response = await fetch(`${baseUrl}/users/login`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -30,7 +30,7 @@ export const registerUserRequest = async (username, email, password) => {
       password: password,
     },
   };
-  const response = await fetch('https://blog.kata.academy/api/users', {
+  const response = await fetch(`${baseUrl}/users`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -46,7 +46,7 @@ export const registerUserRequest = async (username, email, password) => {
 };
 
 export const getProfileByUsernameRequest = async (username) => {
-  const response = await fetch(`https://blog.kata.academy/api/profiles/${username}`, {
+  const response = await fetch(`${baseUrl}/profiles/${username}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const getProfileByUsernameRequest = async (username) => {
 };
 
 export const getCurrentUserByToken = async (token) => {
-  const response = await fetch('https://blog.kata.academy/api/user', {
+  const response = await fetch(`${baseUrl}/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -69,8 +69,6 @@ export const getCurrentUserByToken = async (token) => {
 };
 
 export const updateProfileUser = async (email, password, username, urlAvatar, token) => {
-  console.log(token);
-
   const body = {
     user: {
       username: username,
@@ -79,9 +77,7 @@ export const updateProfileUser = async (email, password, username, urlAvatar, to
   };
   if (urlAvatar) body.user['image'] = urlAvatar;
   if (urlAvatar) body.user['password'] = password;
-  console.log(body);
-
-  const response = await fetch('https://blog.kata.academy/api/user', {
+  const response = await fetch(`${baseUrl}/user`, {
     method: 'PUT',
     body: JSON.stringify(body),
     headers: {
@@ -106,7 +102,7 @@ export const createNewArticle = async (title, description, bodyArticles, tagList
       tagList: tagList,
     },
   };
-  const response = await fetch('https://blog.kata.academy/api/articles', {
+  const response = await fetch(`${baseUrl}/articles`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -130,7 +126,7 @@ export const updateArticle = async (title, description, bodyArticles, token, slu
       body: bodyArticles,
     },
   };
-  const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+  const response = await fetch(`${baseUrl}/articles/${slug}`, {
     method: 'PUT',
     body: JSON.stringify(body),
     headers: {
@@ -147,11 +143,24 @@ export const updateArticle = async (title, description, bodyArticles, token, slu
 };
 
 export const deleteArticleBySlug = async (slug, token) => {
-  await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+  await fetch(`${baseUrl}/articles/${slug}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     },
   });
+};
+
+export const changeFavoriteBySlug = async (slug, token, status) => {
+  const response = await fetch(`${baseUrl}/articles/${slug}/favorite`, {
+    method: status ? 'POST' : 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    },
+  });
+  const data = await response.json();
+  if (response.ok) return data;
+  else return Promise.reject(data);
 };

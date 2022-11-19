@@ -2,9 +2,8 @@ import { Button, Form, Input, Checkbox } from 'antd';
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Password from 'antd/lib/input/Password';
-
-// import { registerUserRequest } from '../../blogApi';
 
 import {
   onlyRequired,
@@ -14,31 +13,23 @@ import {
   validateRepeatPassword,
   validateUsernameRegister,
 } from '../../validateRules';
-import { registerUserRequest } from '../../blogApi';
+import { errorDetail, setCookie } from '../../helpFunctions';
 
 import signPageStyle from './SignUpPage.module.scss';
 
-const SignUpPage = ({ loginUser, history }) => {
+const SignUpPage = ({ loginUser, history, registerUserRequest }) => {
   const [errors, setErrors] = useState(false);
 
   const registerFunction = async ({ email, password, username }) => {
     registerUserRequest(username, email, password)
       .then(({ user: { email, token, username } }) => {
         loginUser(email, token, username);
-        document.cookie = `token=${token}`;
+        setCookie('token', token, { path: '/' });
         history.push('/');
       })
       .catch((error) => {
         setErrors(error?.errors);
       });
-  };
-
-  const errorDetail = (name) => {
-    if (!errors) return;
-    if (errors[name]) {
-      return <div className="ant-form-item-explain-error">{name + ' ' + errors[name]}</div>;
-    }
-    return;
   };
 
   return (
@@ -53,7 +44,7 @@ const SignUpPage = ({ loginUser, history }) => {
       >
         <Input placeholder="some username" className={errors['username'] && 'ant-input-status-error'} />
       </Form.Item>
-      {errors && errorDetail('username')}
+      {errors && errorDetail('username', errors)}
       <Form.Item
         label="Email address"
         name="email"
@@ -63,7 +54,7 @@ const SignUpPage = ({ loginUser, history }) => {
       >
         <Input placeholder="Email address" className={errors['email'] && 'ant-input-status-error'} />
       </Form.Item>
-      {errors && errorDetail('email')}
+      {errors && errorDetail('email', errors)}
       <Form.Item
         label="Password"
         name="password"
@@ -73,7 +64,7 @@ const SignUpPage = ({ loginUser, history }) => {
       >
         <Password placeholder="Password" />
       </Form.Item>
-      {errors && errorDetail('password')}
+      {errors && errorDetail('password', errors)}
       <Form.Item
         label="Repeat password"
         name="repeat-password"
@@ -101,6 +92,12 @@ const SignUpPage = ({ loginUser, history }) => {
       </Form.Item>
     </Form>
   );
+};
+
+SignUpPage.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  registerUserRequest: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withRouter(SignUpPage);

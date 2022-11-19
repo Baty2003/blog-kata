@@ -3,27 +3,20 @@ import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Link, withRouter } from 'react-router-dom';
 import Password from 'antd/lib/input/Password';
+import PropTypes from 'prop-types';
 
-import { loginUserRequest } from '../../blogApi';
 import { validateEmail } from '../../validateRules';
+import { errorDetail, setCookie } from '../../helpFunctions';
 
 import signPageStyle from './SignInPage.module.scss';
 
-const SignInPage = ({ loginUser, history }) => {
+const SignInPage = ({ loginUser, history, loginUserRequest }) => {
   const [errors, setErrors] = useState({});
-
-  const errorDetail = (name) => {
-    if (errors[name]) {
-      return <div className="ant-form-item-explain-error">{name + ' ' + errors[name]}</div>;
-    }
-    return;
-  };
-
   const loginFunction = ({ email, password }) => {
     loginUserRequest(email, password)
       .then(({ user: { email, token, username } }) => {
         loginUser(email, token, username);
-        document.cookie = `token=${token}`;
+        setCookie('token', token, { path: '/' });
         history.push('/');
       })
       .catch((error) => {
@@ -34,7 +27,7 @@ const SignInPage = ({ loginUser, history }) => {
   return (
     <Form name="login" initialValues={{ remember: true }} onFinish={loginFunction} className={signPageStyle['form']}>
       <h2 className={signPageStyle['title']}>Sign In</h2>
-      {errorDetail('email or password')}
+      {errors && errorDetail('email or password', errors)}
       <Form.Item
         label="Email address"
         name="email"
@@ -47,7 +40,7 @@ const SignInPage = ({ loginUser, history }) => {
           className={(errors['email'] || errors['email or password']) && 'ant-input-status-error'}
         />
       </Form.Item>
-      {errorDetail('email')}
+      {errors && errorDetail('email', errors)}
       <Form.Item
         label="Password"
         name="password"
@@ -57,7 +50,7 @@ const SignInPage = ({ loginUser, history }) => {
       >
         <Password placeholder="Password" />
       </Form.Item>
-      {errorDetail('password')}
+      {errors && errorDetail('password', errors)}
       <Form.Item className={signPageStyle['label']}>
         <Button type="primary" size="large" htmlType="submit" className={signPageStyle['button-submit']}>
           Login
@@ -67,4 +60,11 @@ const SignInPage = ({ loginUser, history }) => {
     </Form>
   );
 };
+
+SignInPage.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  loginUserRequest: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
 export default withRouter(SignInPage);

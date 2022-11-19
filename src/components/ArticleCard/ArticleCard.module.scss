@@ -23,6 +23,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+}
+.space-between{
   justify-content: space-between;
 }
 
@@ -34,8 +36,22 @@
   text-decoration: none;
 }
 
-.button-like {
+.checkbox{
+  position: absolute;
+  left: -9999px;
+
+  &:disabled ~ .checkbox-like{
+    opacity: 0.1;
+  }
+  &:checked ~ .checkbox-like{
+    background-image: url(./img/heart-on.svg);
+    background-position: 10% 90%;
+  }
+}
+
+.checkbox-like {
   border: none;
+  display: block;
   background: transparent url(./img/heart-off.svg) no-repeat;
   width: 16px;
   height: 16px;

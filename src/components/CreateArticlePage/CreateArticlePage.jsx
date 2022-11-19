@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { onlyRequired } from '../../validateRules';
+
 import 'antd/dist/antd.css';
-import { createNewArticle, updateArticle } from '../../blogApi';
 
 import createArticlePageStyle from './CreateArticlePage.module.scss';
 
-const CreateArticlePage = ({ token, history, edit, inititalArticle }) => {
+const CreateArticlePage = ({ token, history, edit, inititalArticle, createNewArticle, updateArticle }) => {
   const [errors, setErrors] = useState(false);
   const [arrIdsForTagsFields, setArrTagsElem] = useState([]);
   const [lastIdTagField, setLastIdTagField] = useState(0);
@@ -28,8 +29,6 @@ const CreateArticlePage = ({ token, history, edit, inititalArticle }) => {
   const createAcrticle = ({ title, description, text, tags = undefined }) => {
     createNewArticle(title, description, text, convertTagsFieldinArray(tags), token)
       .then(({ article }) => {
-        console.log(article);
-
         history.push(`/article/${article.slug}`);
       })
       .catch(({ errors }) => {
@@ -40,7 +39,7 @@ const CreateArticlePage = ({ token, history, edit, inititalArticle }) => {
   const editAcrticle = ({ title, description, text }) => {
     updateArticle(title, description, text, token, inititalArticle.slug)
       .then(() => {
-        history.push(`/article/${inititalArticle.slug}`);
+        history.push(`/article/${inititalArticle?.slug}`);
       })
       .catch(({ errors }) => {
         setErrors(errors);
@@ -161,5 +160,26 @@ const CreateArticlePage = ({ token, history, edit, inititalArticle }) => {
       </Form.Item>
     </Form>
   );
+};
+
+CreateArticlePage.defaultProps = {
+  token: '',
+  inititalArticle: {
+    title: null,
+    description: null,
+    body: null,
+  },
+  history: {},
+  edit: false,
+  createNewArticle: () => Promise.reject(),
+  updateArticle: () => Promise.reject(),
+};
+CreateArticlePage.propTypes = {
+  token: PropTypes.string,
+  inititalArticle: PropTypes.object,
+  history: PropTypes.object,
+  edit: PropTypes.bool,
+  createNewArticle: PropTypes.func,
+  updateArticle: PropTypes.func,
 };
 export default withRouter(CreateArticlePage);

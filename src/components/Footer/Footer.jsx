@@ -9,7 +9,8 @@ import 'antd/dist/antd.css';
 import footerStyle from './Footer.module.scss';
 
 const Footer = (props) => {
-  const { currentPage, totalPage, changeCurrentPage } = props;
+  const { currentPage, totalPage, changeCurrentPage, loading } = props;
+  if (loading) return;
   return (
     <footer className={`${props.className ? props.className : null} ${footerStyle['footer']}`}>
       <Route
@@ -27,6 +28,7 @@ const mapsStateToProps = (state) => {
   return {
     currentPage: state.articles.currentPage,
     totalPage: Math.round(state.articles.articlesCount / 20),
+    loading: state.articles.isFetching,
   };
 };
 

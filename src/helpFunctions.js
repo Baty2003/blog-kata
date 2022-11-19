@@ -33,3 +33,10 @@ export const deleteCookie = (name) => {
     'max-age': -1,
   });
 };
+
+export const errorDetail = (name, errors) => {
+  if (errors[name]) {
+    return <div className="ant-form-item-explain-error">{name + ' ' + errors[name]}</div>;
+  }
+  return;
+};

@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Footer } from '../Footer';
 import { Header } from '../Header';
-import { ArticlesList } from '../ArticlesList';
-import { SignInPage } from '../SignInPage';
+import { Main } from '../Main';
 import './App.scss';
-import ArticlePageGetDataAndRender from '../ArticlePageGetDataAndRender/ArticlePageGetDataAndRender';
 import ErrorBoundaries from '../ErrorBoundaries/ErrorBoundaries';
-import { logoutUser, setImgLoginUser, setLoginUser } from '../../redux/actions';
-import { SignUpPage } from '../SignUpPage';
+import { setImgLoginUser, setLoginUser } from '../../redux/actions';
 import { getCurrentUserByToken } from '../../blogApi';
 import { getCookie } from '../../helpFunctions';
-import EditProfilePage from '../EditProfilePage/EditProfilePage';
-import { CreateArticlePage } from '../CreateArticlePage';
 
-const App = ({ articles, loading, setLoginUser, user, logoutUserHeader, token }) => {
+const App = ({ setLoginUser }) => {
   useEffect(() => {
     if (getCookie('token')) {
       getCurrentUserByToken(getCookie('token'))
@@ -32,53 +27,12 @@ const App = ({ articles, loading, setLoginUser, user, logoutUserHeader, token })
   return (
     <Router>
       <ErrorBoundaries>
-        <Header user={user} logout={logoutUserHeader} />
-        <section className="container">
-          <Route
-            exact
-            path={['/', '/articles']}
-            render={() => <ArticlesList items={articles.articlesItems} loading={loading} />}
-          />
-          <Route
-            exact
-            path="/article/:id"
-            render={({ match }) => {
-              return <ArticlePageGetDataAndRender slug={match.params.id} />;
-            }}
-          />
-          <Route
-            path="/article/:id/edit"
-            render={({ match }) => {
-              return (
-                <CreateArticlePage
-                  slug={match.params.id}
-                  token={token}
-                  edit
-                  inititalArticle={articles.currentArticle}
-                />
-              );
-            }}
-          />
-          <Route path="/sign-in" render={() => <SignInPage loginUser={setLoginUser} />} />
-          <Route path="/sign-up" render={() => <SignUpPage loginUser={setLoginUser} />} />
-          <Route
-            path="/profile"
-            render={() => <EditProfilePage loginUser={setLoginUser} token={token} user={user} />}
-          />
-          <Route path="/new-article" render={() => <CreateArticlePage token={token} />} />
-        </section>
+        <Header />
+        <Main />
         <Footer className="container" />
       </ErrorBoundaries>
     </Router>
   );
-};
-const mapsStateToProps = (state) => {
-  return {
-    articles: state.articles,
-    loading: state.articles.isFetching,
-    user: state.user,
-    token: state.user.token,
-  };
 };
 
 const mapsStateToDispatch = (dispatch) => {
@@ -87,8 +41,7 @@ const mapsStateToDispatch = (dispatch) => {
       dispatch(setLoginUser(email, token, username));
       dispatch(setImgLoginUser(username));
     },
-    logoutUserHeader: () => dispatch(logoutUser()),
   };
 };
 
-export default connect(mapsStateToProps, mapsStateToDispatch)(App);
+export default connect(null, mapsStateToDispatch)(App);
