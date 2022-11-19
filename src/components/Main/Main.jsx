@@ -14,9 +14,7 @@ import { SignUpPage } from '../SignUpPage';
 import { NotLoggin } from '../NotLoggin';
 import { GetAcrticleForEditArticlePage } from '../GetAcrticleForEditArticlePage';
 
-const Main = ({ articles, setLoginUser, user, token, isLoggin }) => {
-  console.log(articles);
-
+const Main = ({ setLoginUser, user, token, isLoggin }) => {
   return (
     <main className="container">
       <Route exact path={['/', '/articles']} render={() => <GetArticlesForComponent Component={ArticlesList} />} />
