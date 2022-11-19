@@ -1,0 +1,41 @@
+@import '../../colors.scss';
+
+.container {
+  display: flex;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.name,
+.date {
+  display: block;
+}
+
+.name {
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+}
+
+.date {
+  font-size: 12px;
+  line-height: 22px;
+  color: $secondary-text;
+}
+
+.img-container {
+}
+
+.img-profile {
+  width: 46px;
+  height: 46px;
+  border-radius: 30px;
+}
+
+.vertical-center-flex {
+  justify-content: center;
+}

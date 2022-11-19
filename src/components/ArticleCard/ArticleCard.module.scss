@@ -1,0 +1,92 @@
+@import '../../colors.scss';
+.card {
+  background-color: white;
+  padding: 15px 15px 25px 15px;
+  margin-bottom: 25px;
+}
+
+.card-in-page {
+  margin-bottom: 0;
+}
+
+.header-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.title {
+  color: $info-color;
+  font-size: 20px;
+  line-height: 28px;
+  margin-right: 12px;
+  text-decoration: none;
+}
+
+.button-like {
+  border: none;
+  background: transparent url(./img/heart-off.svg) no-repeat;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.counter-like {
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.tags {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 12px;
+  line-height: 16px;
+  border: 1px solid $secondary-text;
+  margin-right: 5px;
+  border-radius: 2px;
+  color: $secondary-text;
+}
+
+.container-body {
+}
+
+body {
+}
+
+.grey-description {
+  color: $secondary-text;
+  margin-top: 20px;
+}
+
+.container-button {
+  position: relative;
+  margin-top: 20px;
+}
+
+.delete-button,
+.edit-button {
+  padding: 1px 17px;
+  font-size: 14px;
+}
+
+.delete-button {
+  margin-right: 12px;
+  color: $error-color;
+  border-color: $error-color;
+}

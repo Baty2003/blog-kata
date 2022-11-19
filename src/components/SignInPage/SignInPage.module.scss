@@ -1,0 +1,54 @@
+@import '../../colors.scss';
+
+.form {
+  background-color: white;
+  max-width: 400px;
+  padding: 48px 32px;
+  margin: auto;
+  font-family: 'Roboto';
+}
+
+.label {
+  margin-bottom: 12px;
+}
+
+.form .label:last-child {
+  margin-bottom: 0;
+}
+
+.label > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: 'Roboto';
+  text-align: center;
+}
+
+.button-submit {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.secondary-text {
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color: $grey-text;
+}
+
+.label-checkbox {
+  border-top: 1px solid $grey-text;
+  padding-top: 10px;
+}
+
+.checkbox {
+  color: $another-grey-text;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}

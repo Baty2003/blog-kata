@@ -1,0 +1,56 @@
+@import '../../colors.scss';
+.form {
+  background-color: white;
+  max-width: 900px;
+  padding: 48px 32px;
+  margin: auto;
+  font-family: 'Roboto';
+}
+
+.label {
+  margin-bottom: 12px;
+}
+
+.label-no-margin {
+  margin: 0;
+}
+
+.form .label:last-child {
+  margin-bottom: 0;
+}
+
+.label > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: 'Roboto';
+  text-align: center;
+}
+
+.button-submit {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.form .text-area {
+  min-height: 170px;
+}
+
+.tag {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.button-tag {
+  padding: 0px 20px;
+  font-size: 14px;
+  height: 32px;
+  margin-left: 17px;
+  &--no-margin {
+    margin: 0;
+  }
+}

@@ -1,0 +1,16 @@
+@import '../../colors.scss';
+
+.link {
+  display: block;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 10px 18px;
+  text-decoration: none;
+  color: black;
+}
+
+.primary {
+  color: $success-color;
+  border: 1px solid $success-color;
+  border-radius: 5px;
+}

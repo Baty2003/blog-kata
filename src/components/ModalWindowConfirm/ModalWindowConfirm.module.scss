@@ -1,0 +1,76 @@
+@import '../../colors.scss';
+
+.pseudo-container {
+  position: absolute;
+  padding: 12px 16px;
+  background-color: white;
+  left: 95px;
+  top: -5px;
+  width: 240px;
+  height: 104px;
+  box-shadow: 1px 1px 10px;
+  z-index: 1;
+  border-radius: 4px;
+}
+
+.container::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: white;
+  position: absolute;
+  left: 88px;
+  top: 10px;
+  z-index: 0;
+  transform: rotate(45deg);
+  box-shadow: 1px 1px 10px;
+}
+
+.pseudo-container {
+  z-index: 1;
+}
+
+.text {
+  position: relative;
+  margin-left: 16px;
+}
+
+.text::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: transparent url(./img/exclamation-circle.svg);
+  position: absolute;
+  left: -20px;
+  top: 0;
+}
+
+.container-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  padding: 2px 5px;
+  background: none;
+  border: 1px solid $secondary-text;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:first-child {
+    margin-right: 8px;
+  }
+
+  &:focus,
+  &:hover {
+    color: white;
+    background: $info-color;
+    border-color: transparent;
+    outline-color: transparent;
+  }
+}
+
+.button:first-child {
+  margin-right: 8px;
+}
