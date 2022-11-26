@@ -25,9 +25,8 @@ import { GetArticlesForComponent } from '../../common/GetArticlesForComponent';
 import { SignInPage } from '../SignInPage';
 import { SignUpPage } from '../SignUpPage';
 import { Loader } from '../Loader';
-import { NotLoggin } from '../NotLoggin';
 
-const App = ({ setLoginUser, token, user, isLoggin, loading }) => {
+const App = ({ setLoginUser, token, user, loading }) => {
   useEffect(() => {
     if (getCookie('token')) {
       getCurrentUserByToken(getCookie('token'))
@@ -76,7 +75,6 @@ const App = ({ setLoginUser, token, user, isLoggin, loading }) => {
           <Route
             path="/profile"
             render={() => {
-              if (!isLoggin) return <NotLoggin />;
               if (loading) return <Loader />;
               return (
                 <AxiosInterceptor>
@@ -111,7 +109,6 @@ const mapsStateToProps = (state) => {
     loading: state.articles.isFetching,
     user: state.user,
     token: state.user.token,
-    isLoggin: state.user.isLoggin,
   };
 };
 
