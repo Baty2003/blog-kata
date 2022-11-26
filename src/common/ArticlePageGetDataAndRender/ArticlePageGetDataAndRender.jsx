@@ -1,28 +1,26 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
 
 import { deleteArticleBySlug, changeFavoriteBySlug } from '../../blogApi';
 import { getArticle } from '../../redux/actions';
-import ArticlePage from '../ArticlePage/ArticlePage';
+import { Loader } from '../../components/Loader';
+import ArticlePage from '../../components/ArticlePage/ArticlePage';
 const ArticlePageGetDataAndRender = ({
   slug,
   getArticleOnSlug,
   article,
-  loading,
   author,
   token,
   history,
   isLoggin,
+  loading,
 }) => {
   useEffect(() => {
     getArticleOnSlug(slug);
   }, []);
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 60 }} spin />;
-  if (loading) return <Spin indicator={antIcon} style={{ display: 'flex', justifyContent: 'center' }} />;
+  if (loading) return <Loader />;
   return (
     <ArticlePage
       item={article}

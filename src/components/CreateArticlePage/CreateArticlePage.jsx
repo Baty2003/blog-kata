@@ -1,19 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { onlyRequired } from '../../validateRules';
-
+import { onlyRequired } from '../../utils/validateRules';
 import 'antd/dist/antd.css';
+import { getArticle } from '../../redux/actions';
+import { Loader } from '../Loader';
 
 import createArticlePageStyle from './CreateArticlePage.module.scss';
 
-const CreateArticlePage = ({ token, history, edit, inititalArticle, createNewArticle, updateArticle }) => {
+const CreateArticlePage = ({ slug, token, history, edit, createNewArticle, updateArticle }) => {
   const [errors, setErrors] = useState(false);
   const [arrIdsForTagsFields, setArrTagsElem] = useState([]);
   const [lastIdTagField, setLastIdTagField] = useState(0);
+  const currentArticle = useSelector((state) => state.articles.currentArticle);
+  const username = useSelector((state) => state.user.username);
+  const dispatch = useDispatch();
+  const form = useRef();
+
+  useEffect(() => {
+    if (!edit) return;
+    dispatch(getArticle(slug)), [slug];
+  }, [slug]);
+
+  useEffect(() => {
+    if (!currentArticle?.author || !form.current) return;
+    if (edit) {
+      form.current.setFieldsValue({
+        title: currentArticle?.title,
+        description: currentArticle?.description,
+        text: currentArticle?.body,
+      });
+    } else {
+      form.current.setFieldsValue({
+        title: null,
+        description: null,
+        text: null,
+      });
+    }
+  }, [currentArticle]);
 
   const convertTagsFieldinArray = (tagsObject) => {
     let array = [];
@@ -37,9 +65,9 @@ const CreateArticlePage = ({ token, history, edit, inititalArticle, createNewArt
   };
 
   const editAcrticle = ({ title, description, text }) => {
-    updateArticle(title, description, text, token, inititalArticle.slug)
+    updateArticle(title, description, text, currentArticle.slug)
       .then(() => {
-        history.push(`/article/${inititalArticle?.slug}`);
+        history.push(`/article/${currentArticle?.slug}`);
       })
       .catch(({ errors }) => {
         setErrors(errors);
@@ -55,16 +83,18 @@ const CreateArticlePage = ({ token, history, edit, inititalArticle, createNewArt
     let newArray = arrIdsForTagsFields.filter((id) => id !== idDelete);
     setArrTagsElem(newArray);
   };
-
+  if (currentArticle?.author === undefined) return <Loader />;
+  if (currentArticle?.author?.username !== username && edit) return <h1>Вы не автор этой статьи</h1>;
   return (
     <Form
       name="login"
       onFinish={edit ? editAcrticle : createAcrticle}
       className={createArticlePageStyle['form']}
+      ref={form}
       initialValues={{
-        title: inititalArticle?.title,
-        description: inititalArticle?.description,
-        text: inititalArticle?.body,
+        title: currentArticle?.title,
+        description: currentArticle?.description,
+        text: currentArticle?.body,
       }}
     >
       <h2 className={createArticlePageStyle['title']}>{edit ? 'Edit article' : 'Create new article'}</h2>

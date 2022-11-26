@@ -5,8 +5,8 @@ import { Link, withRouter } from 'react-router-dom';
 import Password from 'antd/lib/input/Password';
 import PropTypes from 'prop-types';
 
-import { validateEmail } from '../../validateRules';
-import { errorDetail, setCookie } from '../../helpFunctions';
+import { validateEmail } from '../../utils/validateRules';
+import { errorDetail, setCookie } from '../../utils/helpFunctions';
 
 import signPageStyle from './SignInPage.module.scss';
 

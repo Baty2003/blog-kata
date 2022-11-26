@@ -119,6 +119,8 @@ export const createNewArticle = async (title, description, bodyArticles, tagList
 };
 
 export const updateArticle = async (title, description, bodyArticles, token, slug) => {
+  console.log(token);
+
   const body = {
     article: {
       title: title,

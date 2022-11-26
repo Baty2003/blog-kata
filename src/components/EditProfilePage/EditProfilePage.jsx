@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Password from 'antd/lib/input/Password';
 import PropTypes from 'prop-types';
 
-import { validateEmail, validatePasswordEdit, validateUsernameRegister } from '../../validateRules';
+import { validateEmail, validatePasswordEdit, validateUsernameRegister } from '../../utils/validateRules';
 
 import editPageStyle from './EditProfilePage.module.scss';
 
@@ -46,7 +46,7 @@ const EditProfilePage = ({ loginUser, history, token, user, updateProfileUser })
         className={editPageStyle['label']}
         labelAlign="left"
       >
-        <Input placeholder="some username" className={errors['username'] && 'ant-input-status-error'} />
+        <Input placeholder="some username" className={errors?.username && 'ant-input-status-error'} />
       </Form.Item>
       {errors && errorDetail('username')}
       <Form.Item
@@ -56,7 +56,7 @@ const EditProfilePage = ({ loginUser, history, token, user, updateProfileUser })
         className={editPageStyle['label']}
         labelAlign="left"
       >
-        <Input placeholder="Email address" className={errors['email'] && 'ant-input-status-error'} />
+        <Input placeholder="Email address" className={errors?.email && 'ant-input-status-error'} />
       </Form.Item>
       {errors && errorDetail('email')}
       <Form.Item
@@ -77,7 +77,7 @@ const EditProfilePage = ({ loginUser, history, token, user, updateProfileUser })
         labelAlign="left"
         rules={[{ type: 'url', message: 'Неккоректная ссылка' }]}
       >
-        <Input placeholder="Avatar Image" className={errors['avatar'] && 'ant-input-status-error'} />
+        <Input placeholder="Avatar Image" className={errors?.avatar && 'ant-input-status-error'} />
       </Form.Item>
 
       <Form.Item className={editPageStyle['label']}>

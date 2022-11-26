@@ -35,7 +35,7 @@ export const logoutUser = () => {
 };
 
 export const setImgLoginUser = (username) => async (dispatch) => {
-  dispatch(setIsFetching(false));
+  dispatch(setIsFetching(true));
   let errorFlag = false;
   const response = await getProfileByUsernameRequest(username).catch(() => {
     errorFlag = true;
@@ -62,6 +62,7 @@ export const getArticles = (offset) => (dispatch) => {
 
 export const getArticle = (slug) => (dispatch) => {
   dispatch(setIsFetching(true));
+
   return fetch(`https://blog.kata.academy/api/articles/${slug}`)
     .then((response) => response.json())
     .then((data) => {

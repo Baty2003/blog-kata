@@ -9,7 +9,7 @@ const ArticlePage = ({ item, author, deleteArticleFunc, changeFavoriteFunction, 
   const countItem = Object.keys(item).length;
   return (
     <div className={articlePageStyle['container']}>
-      {countItem && (
+      {countItem ? (
         <ArticleCard
           articleObj={item}
           articlePage
@@ -18,6 +18,8 @@ const ArticlePage = ({ item, author, deleteArticleFunc, changeFavoriteFunction, 
           changeFavoriteFunction={changeFavoriteFunction}
           disableChangeFavorite={disableChangeFavorite}
         />
+      ) : (
+        <h1>Ошибка получения статьи</h1>
       )}
       <div className={articlePageStyle['markdown']}>
         <ReactMarkdown>{item.body}</ReactMarkdown>

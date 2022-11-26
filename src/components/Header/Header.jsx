@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { deleteCookie } from '../../helpFunctions';
+import { deleteCookie } from '../../utils/helpFunctions';
 import { logoutUser } from '../../redux/actions';
 import { LinkStyle } from '../LinkStyle';
 import { ProfileInCard } from '../ProfileInCard';

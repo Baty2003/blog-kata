@@ -12,8 +12,8 @@ import {
   validatePasswordRegister,
   validateRepeatPassword,
   validateUsernameRegister,
-} from '../../validateRules';
-import { errorDetail, setCookie } from '../../helpFunctions';
+} from '../../utils/validateRules';
+import { errorDetail, setCookie } from '../../utils/helpFunctions';
 
 import signPageStyle from './SignUpPage.module.scss';
 

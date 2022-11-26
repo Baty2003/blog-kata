@@ -55,8 +55,6 @@ export const reducerUser = (state = initialStateUser, action) => {
         img: action.img,
       };
     case LOGOUT_USER:
-      console.log('ne vot');
-
       return initialStateUser;
     default:
       return state;

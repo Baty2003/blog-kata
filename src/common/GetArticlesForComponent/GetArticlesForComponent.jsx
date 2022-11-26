@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
 
 import { getArticles } from '../../redux/actions';
 import { changeFavoriteBySlug } from '../../blogApi';
+import { Loader } from '../../components/Loader';
 
 const GetArticlesForComponent = ({ Component, getArticles, currentPage, articles = [], loading, token, isLoggin }) => {
   useEffect(() => {
@@ -15,8 +14,7 @@ const GetArticlesForComponent = ({ Component, getArticles, currentPage, articles
     changeFavoriteBySlug(slug, token, status);
   };
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 60 }} spin />;
-  if (loading) return <Spin indicator={antIcon} style={{ display: 'flex', justifyContent: 'center' }} />;
+  if (loading) return <Loader />;
   return (
     <Component items={articles} changeFavoriteFunction={changeFavoriteFunction} disableChangeFavorite={!isLoggin} />
   );
